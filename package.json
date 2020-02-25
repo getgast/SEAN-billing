@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel api/server.js --out-dir build",
+    "dev-start": "babel-watch api/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,19 @@
   },
   "homepage": "https://github.com/getgast/SEAN-billing#readme",
   "dependencies": {
+    "bcrypt": "^4.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "pg": "^7.18.1"
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "pg": "^7.18.1",
+    "uuidv4": "^6.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-watch": "^2.0.7",
+    "make-runnable": "^1.3.6",
+    "babel-polyfill": "^6.26.0"
   }
 }

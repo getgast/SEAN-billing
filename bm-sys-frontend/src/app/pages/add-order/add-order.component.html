@@ -1,0 +1,15 @@
+<div class="example-container">
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="form-content">
+      <div class="form-child">
+        <mat-form-field appearance="fill">
+          <mat-label>Nazwa zamówienia</mat-label>
+          <input matInput placeholder="Nazwa zamówienia" formControlName="title">
+        </mat-form-field>
+      </div>
+      <div class="form-child button">
+        <button mat-button>Dodaj</button>
+      </div>
+    </div>
+  </form>
+</div>

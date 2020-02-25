@@ -1,3 +1,9 @@
-<div class="nav-bar">
-  Nawigacja
+<div class="nav-bar-wrapper">
+  <div class="app-title" [routerLink]="['home']">
+    Nawigacja
+  </div>
+  <div class="app-pages">
+    <button mat-button class="button-color" [routerLink]="['add-order']">Dodaj Zamówienie</button>
+    <button mat-button class="button-color" [routerLink]="['order-history']">Histria zamówień</button>
+  </div>
 </div>

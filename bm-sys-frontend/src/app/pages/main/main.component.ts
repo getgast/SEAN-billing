@@ -7,28 +7,15 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  public tiles = [
+    {text: 'Dodaj Zamówienie', cols: 2, rows: 1, color: '#D9EDD9', lingTo: '/add-order'},
+    {text: 'Historia Zamówień', cols: 2, rows: 1, color: '#D9EDD9' , lingTo: '/order-history'},
+    {text: 'Lista Produktów', cols: 2, rows: 1, color: '#D9EDD9' , lingTo: '/order-history'},
+    {text: 'Lista klientów', cols: 2, rows: 1, color: '#D9EDD9' , lingTo: '/order-history'},
+  ];
 
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
   }
-
-  shoot(){
-    this.httpClient.get('http://localhost:3000/test-root').subscribe(data=>{
-      console.log(data)
-    })
-  }
-
-  shootDb(){
-    this.httpClient.get('http://localhost:3000/test-db').subscribe(data=>{
-      console.log(data)
-    })
-  }
-
-  shootDbElem() {
-    this.httpClient.get('http://localhost:3000/test-db-elem').subscribe(data=>{
-      console.log(data)
-    })
-  }
-
 }

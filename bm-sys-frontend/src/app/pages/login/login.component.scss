@@ -1,0 +1,9 @@
+.form-content {
+  display: flex;
+
+  .form-child {
+    &.password {
+      margin-left: 30px;
+    }
+  }
+}

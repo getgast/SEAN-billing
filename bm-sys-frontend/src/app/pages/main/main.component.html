@@ -1,11 +1,17 @@
-<div class="check-button">
-  <button (click)="shoot()">API</button>
+
+<div class="main-wrapper">
+  <div class="app-option-container">
+    <mat-grid-list cols="4" rowHeight="100px">
+      <mat-grid-tile
+          class="cursor"
+          *ngFor="let tile of tiles"
+          [colspan]="tile.cols"
+          [rowspan]="tile.rows"
+          [style.background]="tile.color"
+          [routerLink]="[tile.lingTo]">
+        {{tile.text}}
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
 </div>
 
-<div class="check-button">
-  <button (click)="shootDb()">DB</button>
-</div>
-
-<div class="check-button">
-  <button (click)="shootDbElem()">Elem</button>
-</div>

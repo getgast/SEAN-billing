@@ -1,0 +1,10 @@
+.wrapper {
+  .child-item {
+    display: flex;
+    padding: 10px;
+
+    .order-title {
+      width: 150px;
+    }
+  }
+}

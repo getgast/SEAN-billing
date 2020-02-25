@@ -1,0 +1,14 @@
+.main-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .app-option-container {
+    width: 80%;
+  }
+
+  .cursor {
+    cursor: pointer;
+  }
+}
