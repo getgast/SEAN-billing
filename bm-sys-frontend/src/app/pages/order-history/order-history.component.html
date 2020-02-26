@@ -1,6 +1,6 @@
 <div class="wrapper">
   <ul>
-    <li *ngFor="let item of orderHistory" class="child">
+    <li *ngFor="let item of orderHistory" class="child" [routerLink]="['/edit-order', item['id']]">
       <div class="title">{{item.title}} </div>
       <div class="status">{{item.status}} </div>
     </li>

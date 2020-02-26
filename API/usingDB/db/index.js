@@ -17,16 +17,12 @@ export default {
    */
   query(text, params){
     return new Promise((resolve, reject) => {
-      pool.connect().then(client =>{
-        client.query(text, params)
-        .then((res) => {
-          resolve(res);
-          client.end()
-        })
-        .catch((err) => {
-          reject(err);
-          client.end()
-        })
+      pool.query(text, params)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((err) => {
+        reject(err);
       })
     })
   }

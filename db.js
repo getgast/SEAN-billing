@@ -28,9 +28,8 @@ const createReflectionTable = () => {
         modified_date TIMESTAMP,
         FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
       )`;
-      console.log('createReflectionTable')
+
       pool.connect().then(client=>{
-        console.log('conect')
         client.query(queryText)
         .then((res) => {
           console.log(res);
@@ -99,6 +98,33 @@ const createOrderTable = () => {
       })
 }
 
+const createOrderItemTable = () =>{
+  const queryText = 
+  `CREATE TABLE IF NOT EXISTS 
+      orderinoviceitem (
+        id UUID PRIMARY KEY,
+        product_name TEXT NOT NULL,
+        order_id UUID NOT NULL,
+        order_amount INT,
+        created_date TIMESTAMP,
+        status TEXT NOT NULL,
+        FOREIGN KEY (order_id) REFERENCES orderinovice (id) ON DELETE CASCADE
+      )`;
+      console.log('createOrderTable')
+      pool.connect().then(client=>{
+        console.log('conect')
+        client.query(queryText)
+        .then((res) => {
+          console.log(res);
+          pool.end();
+        })
+        .catch((err) => {
+          console.log(err);
+          pool.end();
+        });
+      })
+}
+
 /**
  * Drop Reflection Table
  */
@@ -137,6 +163,7 @@ const createAllTables = () => {
   createOrderTable();
   createUserTable();
   createReflectionTable();
+  createOrderItemTable();
 }
 /**
  * Drop All Tables

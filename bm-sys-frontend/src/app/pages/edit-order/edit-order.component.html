@@ -5,7 +5,21 @@
       <div class="order-status" mat-button> {{orderData.status}}</div>
     </div>
   </ng-container>
-  <div class="form-container">
-
+  <div class="form-container"  *ngIf="orderData">
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+      <div formArrayName="orderItemList">
+        <ng-container *ngFor="let item of orderItemList.controls; let i=index">
+          <div class="form-group" [formGroupName]="i">
+            <div class="child-form-container">
+              <div class="child"> <input placeholder="Nazwa zamówienia" formControlName="productName" type="text"/></div>
+              <div class="child"> <input placeholder="Nazwa zamówienia" formControlName="productWeight" type="text"/></div>
+              <div class="child"> <input placeholder="Nazwa zamówienia" formControlName="productPrice" type="text"/></div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <button (click)="onSubmit()" type="button">Zapisz</button>
+    </form>
   </div>
+  <button (click)="addOrderItem()">Dodaj produkt</button>
 </div>

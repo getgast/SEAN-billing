@@ -1,0 +1,8 @@
+<div class="wrapper">
+  <ul>
+    <li *ngFor="let item of orderedItemsList" class="child">
+      <div class="title">{{item.product_name}} </div>
+      <div class="status">{{item.created_date | date}} </div>
+    </li>
+  </ul>
+</div>

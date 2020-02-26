@@ -54,6 +54,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { LoginComponent } from './pages/login/login.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 import { EditOrderComponent } from './pages/edit-order/edit-order.component';
+import { OrderedItemsComponent } from './pages/ordered-items/ordered-items.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { EditOrderComponent } from './pages/edit-order/edit-order.component';
     ModalComponent,
     LoginComponent,
     OrderHistoryComponent,
-    EditOrderComponent
+    EditOrderComponent,
+    OrderedItemsComponent
   ],
   imports: [
     BrowserModule,

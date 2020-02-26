@@ -24,12 +24,6 @@ const Order = {
       moment(new Date()),
       'do edycji',
     ];
-    console.log(req.body)
-
-    console.log('query')
-    console.log(createQuery)
-    console.log('value')
-    console.log(values)
 
     try {
       const { rows } = await db.query(createQuery, values);
@@ -37,6 +31,50 @@ const Order = {
       return res.status(201).send(rows[0]);
     } catch(error) {
       console.log('blad')
+      return res.status(400).send(error);
+    }
+  },
+  async addOrderItemList(req, res) {
+    const createQuery = `INSERT INTO 
+      orderinoviceitem(id, product_name, order_id, order_amount, created_date, status)
+      VALUES($1, $2, $3, $4, $5, $6)
+      returning *`;
+
+      const checkInsertArr = await req.body.orderItemList.map(item=>{
+          console.log(item)
+        const values = [     
+            uuid(),
+            item.productName,
+            '755a54da-c33c-4329-930d-99333ba7d386',
+            item.productWeight,
+            moment(new Date()),
+            'do edycji',
+          ];
+          try {
+            const {rows} = db.query(createQuery, values);
+            console.log(rows)
+            return true;
+          } catch (e) {
+            return false;
+          }
+      })
+      
+      console.log(checkInsertArr)
+      if(checkInsertArr.includes(false)) {
+        return res.status(400).send([]);
+      } else {
+          console.log('gra')
+        return res.status(201).send(checkInsertArr)
+      }
+
+
+  },
+  async getAllOrderedItems(req, res) {
+    const findAllQuery = 'SELECT * FROM orderinoviceitem';
+    try {
+      const { rows, rowCount } = await db.query(findAllQuery);
+      return res.status(200).send({ rows, rowCount });
+    } catch(error) {
       return res.status(400).send(error);
     }
   },

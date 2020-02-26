@@ -10,7 +10,7 @@ export class MainComponent implements OnInit {
   public tiles = [
     {text: 'Dodaj Zamówienie', cols: 2, rows: 1, color: '#D9EDD9', lingTo: '/add-order'},
     {text: 'Historia Zamówień', cols: 2, rows: 1, color: '#D9EDD9' , lingTo: '/order-history'},
-    {text: 'Lista Produktów', cols: 2, rows: 1, color: '#D9EDD9' , lingTo: '/order-history'},
+    {text: 'Lista Zamówień (A)', cols: 2, rows: 1, color: '#D9EDD9' , lingTo: '/ordered-items'},
     {text: 'Lista klientów', cols: 2, rows: 1, color: '#D9EDD9' , lingTo: '/order-history'},
   ];
 

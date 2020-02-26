@@ -36,7 +36,9 @@ app.delete('/api/v1/users/me', Auth.verifyToken, UserWithDb.delete);
 
 app.post('/api/v1/add-order', Order.create);
 app.get('/api/v1/all-order', Order.getAll);
+app.get('/api/v1/all-orderd-items', Order.getAllOrderedItems);
 app.get('/api/v1/order/:id', Order.getOne);
+app.post('/api/v1/add-order-items/:id', Order.addOrderItemList);
 
 app.listen(3000)
 console.log('app running on port ', 3000);
