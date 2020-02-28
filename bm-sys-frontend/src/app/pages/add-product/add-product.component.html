@@ -1,0 +1,24 @@
+<div class="container">
+  <form [formGroup]="productPriceForm" (ngSubmit)="onSubmit()">
+    <div class="form-content">
+      <div class="form-child">
+        <mat-form-field appearance="fill">
+          <mat-label>Nazwa Produktu</mat-label>
+          <input matInput placeholder="Nazwa produktu" formControlName="productName">
+        </mat-form-field>
+      </div>
+      <div class="form-child">
+        <mat-form-field appearance="fill">
+          <mat-label>Cena jednostkowa</mat-label>
+          <input matInput placeholder="Cena Jednostkowa" formControlName="productPrice">
+        </mat-form-field>
+      </div>
+      <div class="form-child button">
+        <button mat-button (click)="onSubmit()" type="button">Dodaj Produkt</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+

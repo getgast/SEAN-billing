@@ -1,0 +1,27 @@
+<div class="container">
+  <form [formGroup]="addClientForm" (ngSubmit)="onSubmit()">
+    <div class="form-content">
+      <div class="form-child">
+        <mat-form-field appearance="fill">
+          <mat-label>Nazwa klienta</mat-label>
+          <input matInput placeholder="Nazwa klienta" formControlName="clientName">
+        </mat-form-field>
+      </div>
+      <div class="form-child">
+        <mat-form-field appearance="fill">
+          <mat-label>Adres klienta</mat-label>
+          <input matInput placeholder="Adres klienta" formControlName="clientAddress">
+        </mat-form-field>
+      </div>
+      <div class="form-child">
+        <mat-form-field appearance="fill">
+          <mat-label>Numer klienta</mat-label>
+          <input matInput placeholder="Numer klienta" formControlName="clientPhone">
+        </mat-form-field>
+      </div>
+      <div class="form-child button">
+        <button mat-button (click)="onSubmit()" type="button">Dodaj Klienta</button>
+      </div>
+    </div>
+  </form>
+</div>

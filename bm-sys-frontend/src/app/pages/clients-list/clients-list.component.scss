@@ -1,0 +1,11 @@
+.child {
+  display: flex;
+  width:300px;
+
+  .title, .address {
+    width: 150px;
+  }
+}
+.container {
+  padding:20px;
+}

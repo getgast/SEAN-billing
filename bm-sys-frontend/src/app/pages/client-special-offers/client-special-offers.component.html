@@ -1,0 +1,38 @@
+<div class="container">
+  <h4>Ceny specjalne</h4>
+  <mat-form-field>
+    <mat-label>Klient</mat-label>
+    <mat-select (selectionChange)="onClientChange($event)">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let client of clientList" [value]="client.id">{{client.client_name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="info-box">Klient z ofertami standardowymi</div>
+  <button (click)="addProductForPromoPrice()" type="button" mat-button> Dodaj Produkt</button>
+  <div class="form-container"  *ngIf="addSpecialPriceform">
+    <form [formGroup]="addSpecialPriceform" (ngSubmit)="onSubmit()">
+      <div formArrayName="productWithPromoPrice">
+        <ng-container *ngFor="let item of specialPriceList.controls; let i=index">
+          <div class="form-group" [formGroupName]="i">
+            <div class="child-form-container">
+              <div class="child">
+                <select formControlName="productId">
+                  <option *ngFor="let product of productList"
+                          [value]="product.id">
+                          {{product.product_name}}
+                  </option>
+              </select>
+              </div>
+
+
+              <div class="child"> <input placeholder="Nazwa zamówienia" formControlName="productPrice" type="text"/></div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <button (click)="onSubmit()" type="button">Zapisz</button>
+    </form>
+  </div>
+
+</div>

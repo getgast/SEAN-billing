@@ -29,17 +29,15 @@ const createReflectionTable = () => {
         FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
       )`;
 
-      pool.connect().then(client=>{
-        client.query(queryText)
-        .then((res) => {
-          console.log(res);
-          pool.end();
-        })
-        .catch((err) => {
-          console.log(err);
-          pool.end();
-        });
+      pool.query(queryText)
+      .then((res) => {
+        console.log(res);
+        pool.end();
       })
+      .catch((err) => {
+        console.log(err);
+        pool.end();
+      });
 }
 
 /**
@@ -55,9 +53,7 @@ const createUserTable = () => {
         created_date TIMESTAMP,
         modified_date TIMESTAMP
       )`;
-      console.log('createUserTable')
       pool.connect().then(client=>{
-        console.log('conect')
         client.query(queryText)
         .then((res) => {
           console.log(res);
@@ -83,19 +79,16 @@ const createOrderTable = () => {
         status TEXT NOT NULL,
         FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
       )`;
-      console.log('createOrderTable')
-      pool.connect().then(client=>{
-        console.log('conect')
-        client.query(queryText)
-        .then((res) => {
-          console.log(res);
-          pool.end();
-        })
-        .catch((err) => {
-          console.log(err);
-          pool.end();
-        });
+
+      pool.query(queryText)
+      .then((res) => {
+        console.log(res);
+        pool.end();
       })
+      .catch((err) => {
+        console.log(err);
+        pool.end();
+      });
 }
 
 const createOrderItemTable = () =>{
@@ -110,9 +103,31 @@ const createOrderItemTable = () =>{
         status TEXT NOT NULL,
         FOREIGN KEY (order_id) REFERENCES orderinovice (id) ON DELETE CASCADE
       )`;
-      console.log('createOrderTable')
+   
+       pool.query(queryText)
+      .then((res) => {
+        console.log(res);
+        pool.end();
+      })
+      .catch((err) => {
+        console.log(err);
+        pool.end();
+      });
+}
+
+const createClientTable = ()=>{
+  const queryText = 
+  `CREATE TABLE IF NOT EXISTS 
+      clients (
+        id UUID PRIMARY KEY,
+        client_name TEXT NOT NULL,
+        client_address TEXT NOT NULL,
+        client_number TEXT NOT NULL,
+        client_hashed_id UUID NOT NULL
+      )`;
+
+      console.log('createClientTable')
       pool.connect().then(client=>{
-        console.log('conect')
         client.query(queryText)
         .then((res) => {
           console.log(res);
@@ -123,6 +138,53 @@ const createOrderItemTable = () =>{
           pool.end();
         });
       })
+}
+
+const createProductAndDefaultPriceTable = () =>{
+  const queryText = 
+  `CREATE TABLE IF NOT EXISTS 
+      default_product_price (
+        id SERIAL,
+        product_name TEXT NOT NULL,
+        product_default_price INT NOT NULL,
+        PRIMARY KEY (id)
+      )`;
+
+      pool.connect().then(client=>{
+        client.query(queryText)
+        .then((res) => {
+          console.log(res);
+          pool.end();
+        })
+        .catch((err) => {
+          console.log(err);
+          pool.end();
+        });
+      })
+}
+
+const createProductAndPriceTable = () =>{
+  const queryText = 
+  `CREATE TABLE IF NOT EXISTS 
+      product_price_client (
+        ClientID UUID NOT NULL,
+        ProductID INT NOT NULL,
+        ClientPrice INT NOT NULL,
+        FOREIGN KEY (ClientID) REFERENCES clients(id),
+        FOREIGN KEY (ProductID) REFERENCES default_product_price(id)
+      )`;
+        console.log('createProductAndPriceTable')
+        pool.connect().then(client=>{
+          client.query(queryText)
+          .then((res) => {
+            console.log(res);
+            pool.end();
+          })
+          .catch((err) => {
+            console.log(err);
+            pool.end();
+          });
+        })
 }
 
 /**
@@ -143,9 +205,11 @@ const dropReflectionTable = () => {
 /**
  * Drop User Table
  */
-const dropUserTable = () => {
-  const queryText = 'DROP TABLE IF EXISTS users returning *';
-  pool.query(queryText)
+const dropProductPrice = () => {
+  const queryText = 'DROP TABLE IF EXISTS product_price_client';
+  console.log('dropProductPrice')
+  pool.connect().then(client=>{
+    client.query(queryText)
     .then((res) => {
       console.log(res);
       pool.end();
@@ -154,12 +218,33 @@ const dropUserTable = () => {
       console.log(err);
       pool.end();
     });
+  })
 }
+
+const dropdefault_product_price = () =>{
+  const queryText = 'DROP TABLE IF EXISTS default_product_price';
+  console.log('dropProductPrice')
+  pool.connect().then(client=>{
+    client.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+  })
+}
+
 /**
  * Create All Tables
  */
 const createAllTables = () => {
   console.log('hop')
+  createProductAndPriceTable();
+  createProductAndDefaultPriceTable();
+  createClientTable();
   createOrderTable();
   createUserTable();
   createReflectionTable();
@@ -183,7 +268,11 @@ pool.on('remove', () => {
 module.exports = {
   createAllTables,
   createOrderTable,
-  dropAllTables
+  dropAllTables,
+  createProductAndPriceTable,
+  dropProductPrice,
+  dropdefault_product_price,
+  createProductAndDefaultPriceTable
 };
 
 require('make-runnable');

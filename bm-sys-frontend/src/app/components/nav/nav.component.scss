@@ -6,6 +6,10 @@
   align-items: center;
   background: lightsteelblue;
 
+  .app-title {
+    cursor: pointer;
+  }
+
   .button-color {
     margin-right:10px;
     background: linen;

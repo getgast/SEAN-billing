@@ -19,7 +19,7 @@ const Auth = {
       const decoded = await jwt.verify(token, process.env.SECRET);
       console.log(decoded)
       const text = 'SELECT * FROM users WHERE id = $1';
-      const { rows } = await db.query(text, [decoded.userId]);
+      const { rows } = await db.query(text, ['3b50a8cc-106d-4286-9af5-cdc30d3f3b61']); // user token - do podmianki
       console.log(rows)
       if(!rows[0]) {
         return res.status(400).send({ 'message': 'The token you provided is invalid' });
