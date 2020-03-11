@@ -50,7 +50,6 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
-import { ModalComponent } from './components/modal/modal.component';
 import { LoginComponent } from './pages/login/login.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 import { EditOrderComponent } from './pages/edit-order/edit-order.component';
@@ -61,6 +60,8 @@ import { AddProductComponent } from './pages/add-product/add-product.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ClientSpecialOffersComponent } from './pages/client-special-offers/client-special-offers.component';
 import { UserPanelComponent } from './pages/user-panel/user-panel.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { AddOrderItemModalComponent } from './components/modal/modalVersion/add-order-item-modal/add-order-item-modal.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,6 @@ import { UserPanelComponent } from './pages/user-panel/user-panel.component';
     MainComponent,
     NavComponent,
     AddOrderComponent,
-    ModalComponent,
     LoginComponent,
     OrderHistoryComponent,
     EditOrderComponent,
@@ -78,7 +78,9 @@ import { UserPanelComponent } from './pages/user-panel/user-panel.component';
     AddProductComponent,
     ProductListComponent,
     ClientSpecialOffersComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    ModalComponent,
+    AddOrderItemModalComponent
   ],
   imports: [
     BrowserModule,
@@ -136,6 +138,7 @@ import { UserPanelComponent } from './pages/user-panel/user-panel.component';
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule { }

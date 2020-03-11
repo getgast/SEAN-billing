@@ -1,0 +1,17 @@
+<div class="form-group" [formGroup]="addOrderItem">
+  <div class="child-form-container">
+    <div class="child">
+     <mat-form-field>
+      <mat-select [(value)]="selectedItem"  (selectionChange)="onChange()">
+        <mat-option [value]="product.key" *ngFor="let product of dataPassToModal.productPriceMap | keyvalue">
+          {{product.value.product_name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+    <div class="child"> <input placeholder="Waga" formControlName="productWeight" type="text" matInput /></div>
+    <div class="child" >{{produtPrive}}</div>
+
+  </div>
+</div>
+<button (click)="addOrderItemToList()" mat-button>Dodaj</button>

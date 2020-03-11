@@ -19,6 +19,7 @@ app.use(express.json())
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
 
@@ -40,8 +41,11 @@ app.delete('/api/v1/users/me', Auth.verifyToken, UserWithDb.delete);
 app.post('/api/v1/add-order', Order.create);
 app.get('/api/v1/all-order', Order.getAll);
 app.get('/api/v1/all-orderd-items', Order.getAllOrderedItems);
-app.get('/api/v1/order/:id', Order.getOne);
+app.get('/api/v1/order/:id', Order.editableOrder);
+app.put('/api/v1/add-order-items/:id', Order.editOrderItemInList);
+app.post('/api/v1/delete-order-items/:id', Order.deleteOrderItemFromList);
 app.post('/api/v1/add-order-items/:id', Order.addOrderItemList);
+app.post('/api/v1/add-single-item/:id', Order.addSingleOrderItem)
 
 // clients
 app.post('/api/v1/add-client', Clients.create);

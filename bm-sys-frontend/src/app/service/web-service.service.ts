@@ -13,7 +13,15 @@ export class WebServiceService {
     return this.httpClient.get(`${this.rootUrl}/${url}`)
   }
 
+  put(url, objValue) {
+    return this.httpClient.put(`${this.rootUrl}/${url}`, objValue)
+  }
+
   post(url, objValue) {
     return this.httpClient.post(`${this.rootUrl}/${url}`, objValue)
+  }
+
+  delete(url, objValue) {
+    return this.httpClient.delete(`${this.rootUrl}/${url}`, objValue)
   }
 }

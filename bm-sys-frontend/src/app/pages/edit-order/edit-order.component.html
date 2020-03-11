@@ -1,25 +1,51 @@
 <div class="container">
   <ng-container *ngIf="orderData">
     <div class="child-item">
-      <div class="order-title"> {{orderData.title}}</div>
-      <div class="order-status" mat-button> {{orderData.status}}</div>
+      <div class="order-title"> {{orderData.order.title}}</div>
+      <div class="order-status" mat-button> {{orderData.order.status}}</div>
     </div>
   </ng-container>
-  <div class="form-container"  *ngIf="orderData">
-    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-      <div formArrayName="orderItemList">
-        <ng-container *ngFor="let item of orderItemList.controls; let i=index">
-          <div class="form-group" [formGroupName]="i">
-            <div class="child-form-container">
-              <div class="child"> <input placeholder="Nazwa zamówienia" formControlName="productName" type="text"/></div>
-              <div class="child"> <input placeholder="Nazwa zamówienia" formControlName="productWeight" type="text"/></div>
-              <div class="child"> <input placeholder="Nazwa zamówienia" formControlName="productPrice" type="text"/></div>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-      <button (click)="onSubmit()" type="button">Zapisz</button>
-    </form>
+  <button mat-button (click)="openAddProductModal()">Dodaj produkt</button>
   </div>
-  <button (click)="addOrderItem()">Dodaj produkt</button>
-</div>
+
+
+<ng-container *ngIf="orderData">
+  <table mat-table [dataSource]="orderData.orderChild" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="product">
+      <th mat-header-cell *matHeaderCellDef> Produkt </th>
+      <td mat-cell *matCellDef="let element"> {{element.product_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="order_amount">
+      <th mat-header-cell *matHeaderCellDef> Waga </th>
+      <td mat-cell *matCellDef="let element"> {{element.order_amount}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="product_price">
+      <th mat-header-cell *matHeaderCellDef> Cena Jednostkowa </th>
+      <td mat-cell *matCellDef="let element"> {{mapProductPrice[element.product_id].product_default_price}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="order_price">
+      <th mat-header-cell *matHeaderCellDef> Suma </th>
+      <td mat-cell *matCellDef="let element"> {{element.order_amount * mapProductPrice[element.product_id].product_default_price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Akcje </th>
+      <td mat-cell *matCellDef="let element">
+          <div (click)="editOrder(element)">Edytuj</div>
+          <div (click)="deleteOrderItem(element)">Usuń</div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</ng-container>

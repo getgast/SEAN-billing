@@ -4,12 +4,13 @@ import db from '../db';
 const ProductWithDefaultPrice = {
     async create(req, res) {
         const createQuery = `INSERT INTO 
-          default_product_price (product_name, product_default_price)
-          VALUES($1, $2)
+          default_product_price (product_id, product_name, product_default_price)
+          VALUES($1, $2, $3)
           returning *`;
     
           console.log(req.body)
         const values = [
+          uuid(),
           req.body.productName,
           req.body.productPrice
         ];

@@ -1,1 +1,34 @@
-<p>modal works!</p>
+
+<div id="modal-content-wrapper">
+  <header id="modal-header">
+      <h1 id="modal-title" *ngIf="modalVersion === 'edit'">Edytuj produkt</h1>
+      <h1 id="modal-title" *ngIf="modalVersion === 'add'">Dodaj produkt</h1>
+  </header>
+  <section id="modal-body" class="body-edit" *ngIf="modalVersion === 'edit'">
+    <div class="product-name">
+      {{testStr.passParam.product_name}}
+    </div>
+    <div class="form-child">
+      <mat-form-field appearance="fill">
+        <mat-label>Waga</mat-label>
+        <input matInput placeholder="Amount" [(ngModel)]="itemAmount">
+      </mat-form-field>
+    </div>
+    <div class="product-amount">
+      {{testStr.productPriceMap[testStr.passParam.product_id].product_default_price}}
+    </div>
+
+    <div class="product-sum">
+      {{itemAmount * testStr.productPriceMap[testStr.passParam.product_id].product_default_price}}
+    </div>
+  </section>
+
+  <div *ngIf="modalVersion === 'add'">
+    <app-add-order-item-modal [dataPassToModal]="testStr"></app-add-order-item-modal>
+  </div>
+
+  <footer id="modal-footer" >
+    <button mat-raised-button id="modal-cancel-button" (click)="closeModal()">Zamknij</button>
+      <button mat-raised-button id="modal-action-button" (click)="actionFunction()" *ngIf="modalVersion === 'edit'">Edytuj</button>
+  </footer>
+</div>

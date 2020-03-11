@@ -97,6 +97,7 @@ const createOrderItemTable = () =>{
       orderinoviceitem (
         id UUID PRIMARY KEY,
         product_name TEXT NOT NULL,
+        product_id UUID NOT NULL,
         order_id UUID NOT NULL,
         order_amount INT,
         created_date TIMESTAMP,
@@ -145,6 +146,7 @@ const createProductAndDefaultPriceTable = () =>{
   `CREATE TABLE IF NOT EXISTS 
       default_product_price (
         id SERIAL,
+        product_id UUID NOT NULL, 
         product_name TEXT NOT NULL,
         product_default_price INT NOT NULL,
         PRIMARY KEY (id)
@@ -223,7 +225,22 @@ const dropProductPrice = () => {
 
 const dropdefault_product_price = () =>{
   const queryText = 'DROP TABLE IF EXISTS default_product_price';
-  console.log('dropProductPrice')
+  pool.connect().then(client=>{
+    client.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+  })
+}
+
+
+const drop_invoiceitem = () =>{
+  const queryText = 'DROP TABLE IF EXISTS orderinoviceitem';
   pool.connect().then(client=>{
     client.query(queryText)
     .then((res) => {
@@ -272,7 +289,9 @@ module.exports = {
   createProductAndPriceTable,
   dropProductPrice,
   dropdefault_product_price,
-  createProductAndDefaultPriceTable
+  createProductAndDefaultPriceTable,
+  drop_invoiceitem,
+  createOrderItemTable
 };
 
 require('make-runnable');
