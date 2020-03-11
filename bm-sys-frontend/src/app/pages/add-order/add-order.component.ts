@@ -9,23 +9,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-order.component.scss']
 })
 export class AddOrderComponent implements OnInit {
-  public orderForm: FormGroup;
+  public clientList = [];
+  public selectedClient = '';
+
   constructor(private http: WebServiceService, private router: Router) { }
 
   ngOnInit(): void {
-    this.orderForm = this.createOrderForm();
-  }
-
-  createOrderForm() {
-    return new FormGroup({
-      title: new FormControl(),
-    })
+    this.getAllClients()
   }
 
   onSubmit(){
-    this.http.post('api/v1/add-order', this.orderForm.value).subscribe(data=>{
-      console.log(data)
+    const passValue = {
+      title: 'B&MSausages',
+      klient: this.selectedClient
+    }
+
+    this.http.post('api/v1/add-order', passValue).subscribe(data=>{
       this.router.navigate(['/edit-order', data['id']]);
+    })
+  }
+
+  getAllClients() {
+    this.http.get('api/v1/all-clients').subscribe(data=>{
+      console.log(data)
+      this.clientList = data['rows'];
     })
   }
 }

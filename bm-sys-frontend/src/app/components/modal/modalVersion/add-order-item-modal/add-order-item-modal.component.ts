@@ -34,6 +34,7 @@ export class AddOrderItemModalComponent implements OnInit {
     const passValue = this.addOrderItem.value;
         passValue.productId = this.selectedItem;
         passValue.productName = this.dataPassToModal.productPriceMap[this.selectedItem].product_name;
+        passValue.clientId = this.dataPassToModal.clientId;
         passValue.productPrice = this.dataPassToModal.productPriceMap[this.selectedItem].product_default_price;
         passValue.sumPrice = passValue.productWeight * this.dataPassToModal.productPriceMap[this.selectedItem].product_default_price;
     console.log(passValue)

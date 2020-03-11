@@ -22,6 +22,7 @@ export class EditOrderComponent implements OnInit {
     "order_price",
     "action"
   ];
+  public clientList = [];
   public id: string;
   public orderData;
   public orderForm: FormGroup;
@@ -124,23 +125,11 @@ export class EditOrderComponent implements OnInit {
     this.orderItemList.push(this.createOrderItem());
   }
 
-  onSubmit() {
-    console.log(this.mapProductPrice);
-    const formValue = this.orderForm.value;
-          formValue.orderItemList.map(item => {
-        let itemChange = item;
-
-        itemChange.productName = this.mapProductPrice[item.productId].product_name;
-        itemChange.sumPrice = item.productWeight * this.mapProductPrice[item.productId].product_default_price;
-
-        return itemChange;
-      });
-
-    this.http
-      .post(`api/v1/add-order-items/${this.id}`, formValue)
-      .subscribe(data => {
-        console.log(data);
-      });
+  getAllClients() {
+    this.http.get('api/v1/all-clients').subscribe(data=>{
+      console.log(data)
+      this.clientList = data['rows'];
+    })
   }
 
   deleteOrderItem(element) {
@@ -161,6 +150,10 @@ export class EditOrderComponent implements OnInit {
     this.openModal({}, 'add');
   }
 
+  closeAndGeneratePdf(){
+    console.log('pdf')
+  }
+
   // modal methods
 
   openModal(item, version) {
@@ -172,6 +165,7 @@ export class EditOrderComponent implements OnInit {
     dialogConfig.width = "600px";
     dialogConfig.data = {
       modalVersion: version,
+      clientId: this.orderData.order.client_id || '',
       orderId: this.id,
       productPriceMap:  this.mapProductPrice,
       passParam: item || {}

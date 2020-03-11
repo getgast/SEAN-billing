@@ -1,8 +1,5 @@
 .child {
   display: flex;
-  width:300px;
-
-  .title {
-    width: 150px;
-  }
+  justify-content: space-between;
+  padding:10px
 }

@@ -12,14 +12,15 @@ const Order = {
    */
   async create(req, res) {
     const createQuery = `INSERT INTO 
-      orderinovice(id, title, owner_id, created_date, status)
-      VALUES($1, $2, $3, $4, $5)
+      orderinovice(id, title, client_id, owner_id, created_date, status)
+      VALUES($1, $2, $3, $4, $5, $6)
       returning *`;
 
       console.log(req.body)
     const values = [
       uuid(),
       req.body.title,
+      req.body.klient,
       '3b50a8cc-106d-4286-9af5-cdc30d3f3b61',
       moment(new Date()),
       'do edycji',
@@ -68,8 +69,8 @@ const Order = {
   },
   async addSingleOrderItem(req,res){
     const createQuery = `INSERT INTO 
-    orderinoviceitem(id, product_name, product_id, order_id, order_amount, created_date, status)
-    VALUES($1, $2, $3, $4, $5, $6, $7)
+    orderinoviceitem(id, product_name, product_id, order_id, client_id, order_amount, order_sum, created_date, status)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
     ON CONFLICT (id) DO UPDATE SET order_amount = EXCLUDED.order_amount` ;
 
     console.log(req.body)
@@ -80,7 +81,9 @@ const Order = {
       req.body.productName,
       req.body.productId,
       req.params.id,
+      req.body.clientId,
       req.body.productWeight,
+      req.body.sumPrice,
       date,
       'do edycji',
     ];

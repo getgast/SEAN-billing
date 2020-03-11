@@ -1,15 +1,20 @@
 <div class="container">
-  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-    <div class="form-content">
-      <div class="form-child">
-        <mat-form-field appearance="fill">
-          <mat-label>Nazwa zamówienia</mat-label>
-          <input matInput placeholder="Nazwa zamówienia" formControlName="title">
-        </mat-form-field>
-      </div>
-      <div class="form-child button">
-        <button mat-button>Dodaj</button>
-      </div>
+  <div class="form-content">
+    <div class="form-child">
+      B&MSausages - nazwa sklepu
     </div>
-  </form>
+    <mat-form-field>
+      <mat-select [(value)]="selectedClient" >
+        <mat-option [value]="client.id" *ngFor="let client of clientList">
+          {{client.client_name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="form-child">
+     nr faktury
+    </div>
+    <div class="form-child button">
+      <button mat-button (click)="onSubmit()">Dodaj</button>
+    </div>
+  </div>
 </div>

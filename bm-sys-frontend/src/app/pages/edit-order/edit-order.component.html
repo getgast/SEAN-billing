@@ -2,10 +2,13 @@
   <ng-container *ngIf="orderData">
     <div class="child-item">
       <div class="order-title"> {{orderData.order.title}}</div>
+      <div class="order-client"> {{orderData.order.client_id}}</div>
+      <div class="order-number"> {{orderData.order.order_number}}</div>
       <div class="order-status" mat-button> {{orderData.order.status}}</div>
     </div>
   </ng-container>
   <button mat-button (click)="openAddProductModal()">Dodaj produkt</button>
+  <button mat-button (click)="closeAndGeneratePdf()">Zakończ i generuj fakture</button>
   </div>
 
 

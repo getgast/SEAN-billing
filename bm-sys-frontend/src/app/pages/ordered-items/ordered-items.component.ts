@@ -8,10 +8,13 @@ import { WebServiceService } from 'src/app/service/web-service.service';
 })
 export class OrderedItemsComponent implements OnInit {
   public orderedItemsList = [];
+  public clientList = [];
+  public clientListMap = {};
 
   constructor(private http: WebServiceService) { }
 
   ngOnInit(): void {
+    this.getAllClients();
     this.getAllOrderedItems();
   }
 
@@ -22,4 +25,24 @@ export class OrderedItemsComponent implements OnInit {
     })
   }
 
+  getAllClients() {
+    this.http.get('api/v1/all-clients').subscribe(data=>{
+      console.log(data)
+      this.clientList = data['rows'];
+    }, err=>{
+      console.log(err)
+    },()=>{
+      this.createIdMap(this.clientList)
+    })
+  }
+
+  createIdMap(list) {
+    if (!list) {
+      return;
+    }
+    this.clientListMap = list.reduce((map, obj) => {
+      map[obj.id] = obj;
+      return map;
+    }, {});
+  }
 }

@@ -74,10 +74,13 @@ const createOrderTable = () => {
       orderinovice (
         id UUID PRIMARY KEY,
         title TEXT NOT NULL,
+        client_id UUID,
         owner_id UUID NOT NULL,
+        order_number SERIAL,
         created_date TIMESTAMP,
         status TEXT NOT NULL,
-        FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE
+        FOREIGN KEY (owner_id) REFERENCES users (id) ON DELETE CASCADE,
+        FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE
       )`;
 
       pool.query(queryText)
@@ -99,10 +102,13 @@ const createOrderItemTable = () =>{
         product_name TEXT NOT NULL,
         product_id UUID NOT NULL,
         order_id UUID NOT NULL,
+        client_id UUID,
         order_amount INT,
+        order_sum INT,
         created_date TIMESTAMP,
         status TEXT NOT NULL,
-        FOREIGN KEY (order_id) REFERENCES orderinovice (id) ON DELETE CASCADE
+        FOREIGN KEY (order_id) REFERENCES orderinovice (id) ON DELETE CASCADE,
+        FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE
       )`;
    
        pool.query(queryText)
@@ -254,6 +260,21 @@ const drop_invoiceitem = () =>{
   })
 }
 
+const drop_invoice = () =>{
+  const queryText = 'DROP TABLE IF EXISTS orderinovice';
+  pool.connect().then(client=>{
+    client.query(queryText)
+    .then((res) => {
+      console.log(res);
+      pool.end();
+    })
+    .catch((err) => {
+      console.log(err);
+      pool.end();
+    });
+  })
+}
+
 /**
  * Create All Tables
  */
@@ -291,7 +312,8 @@ module.exports = {
   dropdefault_product_price,
   createProductAndDefaultPriceTable,
   drop_invoiceitem,
-  createOrderItemTable
+  createOrderItemTable,
+  drop_invoice 
 };
 
 require('make-runnable');
