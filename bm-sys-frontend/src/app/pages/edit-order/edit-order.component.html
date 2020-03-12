@@ -13,37 +13,39 @@
 
 
 <ng-container *ngIf="orderData">
-  <table mat-table [dataSource]="orderData.orderChild" class="mat-elevation-z8">
+  <table mat-table [dataSource]="orderData.orderChild" matSort class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Position Column -->
     <ng-container matColumnDef="product">
-      <th mat-header-cell *matHeaderCellDef> Produkt </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Produkt </th>
       <td mat-cell *matCellDef="let element"> {{element.product_name}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="order_amount">
-      <th mat-header-cell *matHeaderCellDef> Waga </th>
+    <ng-container matColumnDef="order_amount" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Waga </th>
       <td mat-cell *matCellDef="let element"> {{element.order_amount}} </td>
     </ng-container>
 
     <ng-container matColumnDef="product_price">
-      <th mat-header-cell *matHeaderCellDef> Cena Jednostkowa </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cena Jednostkowa </th>
       <td mat-cell *matCellDef="let element"> {{mapProductPrice[element.product_id].product_default_price}}</td>
     </ng-container>
 
     <ng-container matColumnDef="order_price">
-      <th mat-header-cell *matHeaderCellDef> Suma </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Suma </th>
       <td mat-cell *matCellDef="let element"> {{element.order_amount * mapProductPrice[element.product_id].product_default_price}} </td>
     </ng-container>
 
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Akcje </th>
       <td mat-cell *matCellDef="let element">
-          <div (click)="editOrder(element)">Edytuj</div>
-          <div (click)="deleteOrderItem(element)">Usuń</div>
+          <div class="action-container">
+            <div (click)="editOrder(element)" mat-button>Edytuj</div>
+            <div (click)="deleteOrderItem(element)" mat-button>Usuń</div>
+          </div>
       </td>
     </ng-container>
 

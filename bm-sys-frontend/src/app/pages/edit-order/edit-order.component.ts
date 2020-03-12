@@ -51,7 +51,7 @@ export class EditOrderComponent implements OnInit {
   getOrderData(id) {
     this.http.get(`api/v1/order/${id}`).subscribe(data => {
       this.orderData = data;
-      this.setFormArrayValue(this.orderData.orderChild);
+      //this.setFormArrayValue(this.orderData.orderChild);
     });
   }
 
@@ -152,6 +152,9 @@ export class EditOrderComponent implements OnInit {
 
   closeAndGeneratePdf(){
     console.log('pdf')
+    this.http.get('api/v1/create-pdf').subscribe(data=>{
+      console.log(data)
+    })
   }
 
   // modal methods

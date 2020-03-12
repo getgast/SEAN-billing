@@ -60,5 +60,45 @@ app.get('/api/v1/product-list', ProductWithDefaultPrice.getProductList);
 // Product and Promo Price
 app.post('/api/v1/add-product-promo', ProductPromoPrice.addPromoPrice); // test
 
+
+// pdf test
+app.get('/api/v1/create-pdf', (req, res)=>{
+  createInvoice(invoice, "./pdf/invoice.pdf");
+
+  res.sendStatus(200)
+});
+const { createInvoice } = require("./usingDB/pdf/pdf_create");
+
+const invoice = {
+  shipping: {
+    name: "Server Mock Klient",
+    address: "Server Mock Main Street",
+    city: "Server Mock City",
+    state: "Server Mock",
+    country: "Server Mock Country",
+    postal_code: 94111
+  },
+  items: [
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Polendwiczki",
+      quantity: 1,
+      amount: 2000
+    }
+  ],
+  subtotal: 8000,
+  paid: 0,
+  invoice_nr: 2
+};
+
+
+// end pdf test
+
 app.listen(3000)
 console.log('app running on port ', 3000);
