@@ -8,6 +8,7 @@ import {
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
 import { ModalComponent } from "./../../components/modal/modal.component";
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: "app-edit-order",
@@ -20,6 +21,7 @@ export class EditOrderComponent implements OnInit {
     "order_amount",
     "product_price",
     "order_price",
+    "order_comment",
     "action"
   ];
   public clientList = [];
@@ -28,12 +30,15 @@ export class EditOrderComponent implements OnInit {
   public orderForm: FormGroup;
   public productPriceList = [];
   public mapProductPrice = {};
+  public testBlob;
+  public isBlobExist = false;
 
   constructor(
     private route: ActivatedRoute,
     private http: WebServiceService,
     private fb: FormBuilder,
     public matDialog: MatDialog,
+    private sanitizer: DomSanitizer,
     @Optional() @Inject(MAT_DIALOG_DATA) data
   ) {
     this.orderForm = this.initOrderItemsForm();
@@ -152,9 +157,29 @@ export class EditOrderComponent implements OnInit {
 
   closeAndGeneratePdf(){
     console.log('pdf')
-    this.http.get('api/v1/create-pdf').subscribe(data=>{
-      console.log(data)
-    })
+   this.passListToBE();
+  }
+
+  // test pass param
+  passListToBE(){
+    this.http
+    .postBlob(`api/v1/create-pdf-test`, this.orderData.orderChild)
+    .subscribe((data: Blob) => {
+      console.log('pass')
+      this.isBlobExist = true;
+      let blob = new Blob([data])
+
+      this.testBlob = blob
+
+    });
+  }
+
+  dataToPdf(){
+    return {
+      shipping: {
+
+      }
+    }
   }
 
   // modal methods
@@ -175,5 +200,11 @@ export class EditOrderComponent implements OnInit {
     };
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(ModalComponent, dialogConfig);
+
+    modalDialog.afterClosed().subscribe(data=>{
+      if (this.id) {
+        this.getOrderData(this.id);
+      }
+    })
   }
 }

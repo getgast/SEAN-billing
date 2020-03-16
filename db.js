@@ -107,6 +107,7 @@ const createOrderItemTable = () =>{
         order_sum INT,
         created_date TIMESTAMP,
         status TEXT NOT NULL,
+        comment TEXT NOT NULL,
         FOREIGN KEY (order_id) REFERENCES orderinovice (id) ON DELETE CASCADE,
         FOREIGN KEY (client_id) REFERENCES clients (id) ON DELETE CASCADE
       )`;

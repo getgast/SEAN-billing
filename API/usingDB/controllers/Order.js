@@ -69,8 +69,8 @@ const Order = {
   },
   async addSingleOrderItem(req,res){
     const createQuery = `INSERT INTO 
-    orderinoviceitem(id, product_name, product_id, order_id, client_id, order_amount, order_sum, created_date, status)
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    orderinoviceitem(id, product_name, product_id, order_id, client_id, order_amount, order_sum, created_date, status, comment)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     ON CONFLICT (id) DO UPDATE SET order_amount = EXCLUDED.order_amount` ;
 
     console.log(req.body)
@@ -86,6 +86,7 @@ const Order = {
       req.body.sumPrice,
       date,
       'do edycji',
+      req.body.comment
     ];
     console.log(values)
     try {
@@ -152,9 +153,9 @@ const Order = {
     }
   },
   async editOrderItemInList(req, res) {
-    const updateQuery = 'UPDATE orderinoviceitem SET order_amount=($1) WHERE id=($2) returning *';
+    const updateQuery = 'UPDATE orderinoviceitem SET order_amount=($1), comment=($2) WHERE id=($3) returning *';
     try {
-      const { rows } = await db.query(updateQuery, [req.body.order_amount, req.body.id]);
+      const { rows } = await db.query(updateQuery, [req.body.order_amount, req.body.comment, req.body.id]);
       return res.status(201).send(rows[0]);
     } catch(error) {
       return res.status(400).send(error);

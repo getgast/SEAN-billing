@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { WebServiceService } from 'src/app/service/web-service.service';
 
@@ -8,6 +8,7 @@ import { WebServiceService } from 'src/app/service/web-service.service';
   styleUrls: ['./add-order-item-modal.component.scss']
 })
 export class AddOrderItemModalComponent implements OnInit {
+  @Output() closeModal = new EventEmitter();
   @Input() dataPassToModal;
   public addOrderItem: FormGroup;
   public produtPrive = 0;
@@ -27,6 +28,7 @@ export class AddOrderItemModalComponent implements OnInit {
     return this.fb.group({
       id: null,
       productWeight: this.fb.control(""),
+      comment: this.fb.control("")
     });
   }
 
@@ -42,6 +44,7 @@ export class AddOrderItemModalComponent implements OnInit {
       .post(`api/v1/add-single-item/${this.dataPassToModal.orderId}`, passValue)
       .subscribe(data => {
         console.log(data);
+        this.closeModal.emit()
       });
   }
 }

@@ -16,6 +16,7 @@ export class ModalComponent implements OnInit {
     "action"
   ];
   public itemAmount;
+  public itemComment;
   public testStr: any;
   public modalVersion = '';
   constructor(@Inject(MAT_DIALOG_DATA) data, public dialogRef: MatDialogRef<ModalComponent>, private http: WebServiceService) {
@@ -25,6 +26,7 @@ export class ModalComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.testStr)
     this.itemAmount = this.testStr.passParam.order_amount;
+    this.itemComment = this.testStr.passParam.comment;
     this.modalVersion = this.testStr.modalVersion;
   }
 
@@ -35,6 +37,7 @@ export class ModalComponent implements OnInit {
   createValueTochange(){
     let startValue = this.testStr.passParam;
         startValue.order_amount = this.itemAmount;
+        startValue.comment = this.itemComment;
     return startValue
   }
 

@@ -1,16 +1,23 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
-function createInvoice(invoice, path) {
-  let doc = new PDFDocument({ size: "A4", margin: 50 });
-
+function createInvoice(invoice, res) {
+  let doc = new PDFDocument({  margin: 50 });
+  doc.registerFont('Cardo', './fonty/Cardo/Cardo-Regular.ttf')
+  res.statusCode = 200;
+  res.setHeader('Content-type', 'application/pdf;charset=UTF-8');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+   // Header to force download
+   res.setHeader('Content-disposition', 'attachment; filename=Untitled.pdf');
   generateHeader(doc);
   generateCustomerInformation(doc, invoice);
   generateInvoiceTable(doc, invoice);
   generateFooter(doc);
 
+  doc.pipe(res);
   doc.end();
-  doc.pipe(fs.createWriteStream(path));
+  //return resToB64;
+  //doc.pipe(fs.createWriteStream(path));
   
 }
 
@@ -73,7 +80,7 @@ function generateInvoiceTable(doc, invoice) {
   let i;
   const invoiceTableTop = 330;
 
-  doc.font("Helvetica-Bold");
+  doc.font('Times-Roman');
   generateTableRow(
     doc,
     invoiceTableTop,
@@ -81,22 +88,25 @@ function generateInvoiceTable(doc, invoice) {
     "Description",
     "Unit Cost",
     "Quantity",
-    "Line Total"
+    "Line Total",
+    "Comment"
   );
   generateHr(doc, invoiceTableTop + 20);
-  doc.font("Helvetica");
+  doc.font("Cardo");
 
   for (i = 0; i < invoice.items.length; i++) {
     const item = invoice.items[i];
     const position = invoiceTableTop + (i + 1) * 30;
+    console.log(item.product_name)
     generateTableRow(
       doc,
       position,
-      item.item,
-      item.description,
-      formatCurrency(item.amount / item.quantity),
-      item.quantity,
-      formatCurrency(item.amount)
+      'Mock do zmiany',
+      item.product_name,
+      formatCurrency( item.order_sum / item.order_amount),
+      item.order_amount,
+      formatCurrency(item.order_sum),
+      item.comment
     );
 
     generateHr(doc, position + 20);
@@ -156,15 +166,17 @@ function generateTableRow(
   description,
   unitCost,
   quantity,
-  lineTotal
+  lineTotal,
+  comment
 ) {
   doc
     .fontSize(10)
     .text(item, 50, y)
     .text(description, 150, y)
-    .text(unitCost, 280, y, { width: 90, align: "right" })
-    .text(quantity, 370, y, { width: 90, align: "right" })
-    .text(lineTotal, 0, y, { align: "right" });
+    .text(unitCost, 200, y, { width: 90, align: "right" })
+    .text(quantity, 250, y, { width: 90, align: "right" })
+    .text(lineTotal, 320, y, { width: 90, align: "right" })
+    .text(comment, 0, y, { align: "right" });
 }
 
 function generateHr(doc, y) {
@@ -177,7 +189,7 @@ function generateHr(doc, y) {
 }
 
 function formatCurrency(cents) {
-  return "$" + (cents / 100).toFixed(2);
+  return "$" + cents.toFixed(2);
 }
 
 function formatDate(date) {

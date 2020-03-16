@@ -13,6 +13,14 @@ export class WebServiceService {
     return this.httpClient.get(`${this.rootUrl}/${url}`)
   }
 
+  getBlob(url) {
+    return this.httpClient.get(`${this.rootUrl}/${url}`, { responseType: 'blob' })
+  }
+
+  postBlob(url, objValue) {
+    return this.httpClient.post(`${this.rootUrl}/${url}`, objValue, { responseType: 'blob' });
+  }
+
   put(url, objValue) {
     return this.httpClient.put(`${this.rootUrl}/${url}`, objValue)
   }

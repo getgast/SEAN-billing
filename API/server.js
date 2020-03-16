@@ -63,9 +63,17 @@ app.post('/api/v1/add-product-promo', ProductPromoPrice.addPromoPrice); // test
 
 // pdf test
 app.get('/api/v1/create-pdf', (req, res)=>{
-  createInvoice(invoice, "./pdf/invoice.pdf");
+  createInvoice(invoice, res);
 
-  res.sendStatus(200)
+  //res.sendStatus(200)
+});
+
+app.post('/api/v1/create-pdf-test', (req, res)=>{
+  console.log(req.body)
+  invoice.items = req.body;
+  createInvoice(invoice, res);
+
+  //res.sendStatus(200)
 });
 const { createInvoice } = require("./usingDB/pdf/pdf_create");
 
@@ -86,11 +94,66 @@ const invoice = {
       amount: 6000
     },
     {
+      client_name: 'B&MSausages',
+      product_name: 'Kiełbasa',
+      order_amount: 12,
+      order_sum: 11,
+    },
+    {
       item: "Masarnia",
-      description: "Polendwiczki",
-      quantity: 1,
-      amount: 2000
-    }
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    {
+      item: "Masarnia",
+      description: "Wołowina",
+      quantity: 2,
+      amount: 6000
+    },
+    
   ],
   subtotal: 8000,
   paid: 0,

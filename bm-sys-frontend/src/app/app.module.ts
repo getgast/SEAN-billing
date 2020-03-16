@@ -62,6 +62,8 @@ import { ClientSpecialOffersComponent } from './pages/client-special-offers/clie
 import { UserPanelComponent } from './pages/user-panel/user-panel.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { AddOrderItemModalComponent } from './components/modal/modalVersion/add-order-item-modal/add-order-item-modal.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
 
 @NgModule({
   declarations: [
@@ -136,6 +138,7 @@ import { AddOrderItemModalComponent } from './components/modal/modalVersion/add-
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent],

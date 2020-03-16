@@ -20,10 +20,12 @@
   "homepage": "https://github.com/getgast/SEAN-billing#readme",
   "dependencies": {
     "bcrypt": "^4.0.0",
+    "blob-stream": "^0.1.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
+    "ngx-extended-pdf-viewer": "^2.0.0-beta.2",
     "pdfkit": "^0.11.0",
     "pg": "^7.18.1",
     "uuidv4": "^6.0.3"

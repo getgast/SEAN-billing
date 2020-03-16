@@ -21,10 +21,17 @@
     <div class="product-sum">
       {{itemAmount * testStr.productPriceMap[testStr.passParam.product_id].product_default_price}}
     </div>
+
+    <div class="form-child">
+      <mat-form-field appearance="fill">
+        <mat-label>Komentarz</mat-label>
+        <input matInput placeholder="Comment" [(ngModel)]="itemComment">
+      </mat-form-field>
+    </div>
   </section>
 
   <div *ngIf="modalVersion === 'add'">
-    <app-add-order-item-modal [dataPassToModal]="testStr"></app-add-order-item-modal>
+    <app-add-order-item-modal [dataPassToModal]="testStr" (closeModal)="closeModal()"></app-add-order-item-modal>
   </div>
 
   <footer id="modal-footer" >
