@@ -47,6 +47,7 @@ export class EditOrderComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get("id");
     this.getProductPriceList();
+    this.getAllClients()
 
     if (this.id) {
       this.getOrderData(this.id);
@@ -103,8 +104,15 @@ export class EditOrderComponent implements OnInit {
     }, {});
   }
 
+  createClientMap(list) {
+    console.log(list)
+    return list.reduce((map, obj) => {
+      map[obj.id] = obj;
+      return map;
+    }, {});
+  }
+
   initOrderItemsForm() {
-    console.log("init form");
     return this.fb.group({
       orderId: "",
       orderItemList: this.fb.array([])
@@ -137,6 +145,10 @@ export class EditOrderComponent implements OnInit {
     })
   }
 
+  findClientData(){
+    return
+  }
+
   deleteOrderItem(element) {
     const elemBody = element;
     console.log(elemBody)
@@ -162,8 +174,11 @@ export class EditOrderComponent implements OnInit {
 
   // test pass param
   passListToBE(){
+    const clientMap = this.createClientMap(this.clientList);
+    this.orderData.order.client = clientMap[this.orderData.order.client_id]
+
     this.http
-    .postBlob(`api/v1/create-pdf-test`, this.orderData.orderChild)
+    .postBlob(`api/v1/create-pdf-test`, this.orderData)
     .subscribe((data: Blob) => {
       console.log('pass')
       this.isBlobExist = true;

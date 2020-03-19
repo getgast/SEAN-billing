@@ -58,6 +58,7 @@ app.get('/api/v1/all-product', ProductWithDefaultPrice.getAllProduct); // test
 app.get('/api/v1/product-list', ProductWithDefaultPrice.getProductList);
 
 // Product and Promo Price
+app.get('/api/v1/all-product-promo', ProductPromoPrice.getClientsPromoProductList); 
 app.post('/api/v1/add-product-promo', ProductPromoPrice.addPromoPrice); // test
 
 
@@ -70,8 +71,8 @@ app.get('/api/v1/create-pdf', (req, res)=>{
 
 app.post('/api/v1/create-pdf-test', (req, res)=>{
   console.log(req.body)
-  invoice.items = req.body;
-  createInvoice(invoice, res);
+  
+  createInvoice(req.body, res);
 
   //res.sendStatus(200)
 });
@@ -79,7 +80,7 @@ const { createInvoice } = require("./usingDB/pdf/pdf_create");
 
 const invoice = {
   shipping: {
-    name: "Server Mock Klient",
+    name: "Server Mock Kłient",
     address: "Server Mock Main Street",
     city: "Server Mock City",
     state: "Server Mock",
@@ -155,7 +156,7 @@ const invoice = {
     },
     
   ],
-  subtotal: 8000,
+  subtotal: 240,
   paid: 0,
   invoice_nr: 2
 };

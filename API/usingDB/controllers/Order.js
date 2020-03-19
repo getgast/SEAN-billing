@@ -69,8 +69,8 @@ const Order = {
   },
   async addSingleOrderItem(req,res){
     const createQuery = `INSERT INTO 
-    orderinoviceitem(id, product_name, product_id, order_id, client_id, order_amount, order_sum, created_date, status, comment)
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+    orderinoviceitem(id, product_name, product_id, order_id, client_id, order_amount, order_sum, created_date, use_by_date, status, comment)
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     ON CONFLICT (id) DO UPDATE SET order_amount = EXCLUDED.order_amount` ;
 
     console.log(req.body)
@@ -85,6 +85,7 @@ const Order = {
       req.body.productWeight,
       req.body.sumPrice,
       date,
+      '21-01-2021',
       'do edycji',
       req.body.comment
     ];

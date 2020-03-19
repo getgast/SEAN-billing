@@ -13,6 +13,7 @@ export class ClientSpecialOffersComponent implements OnInit {
   public clientID = '';
   public addSpecialPriceform: FormGroup;
   public productList = [];
+  public promoProductMap = {};
 
   constructor(private http: WebServiceService, private fb: FormBuilder) { }
 
@@ -20,6 +21,7 @@ export class ClientSpecialOffersComponent implements OnInit {
     this.getAllClients();
     this.addFormForSpecialOffer();
     this.getProductList();
+    this.getAllPropoProductMap();
   }
 
   getAllClients() {
@@ -71,6 +73,12 @@ export class ClientSpecialOffersComponent implements OnInit {
   addProductForPromoPrice() {
     console.log('addProductForPromoPrice')
     this.specialPriceList.push(this.createSpecialPriceForProduct())
+  }
+
+  getAllPropoProductMap(){
+    this.http.get('api/v1/all-product-promo').subscribe(data=>{
+      this.promoProductMap = data;
+    })
   }
 
   onSubmit(){

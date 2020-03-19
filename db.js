@@ -103,9 +103,10 @@ const createOrderItemTable = () =>{
         product_id UUID NOT NULL,
         order_id UUID NOT NULL,
         client_id UUID,
-        order_amount INT,
-        order_sum INT,
+        order_amount NUMERIC (7, 2),
+        order_sum NUMERIC (7, 2),
         created_date TIMESTAMP,
+        use_by_date TIMESTAMP,
         status TEXT NOT NULL,
         comment TEXT NOT NULL,
         FOREIGN KEY (order_id) REFERENCES orderinovice (id) ON DELETE CASCADE,
@@ -134,7 +135,7 @@ const createClientTable = ()=>{
         client_hashed_id UUID NOT NULL
       )`;
 
-      console.log('createClientTable')
+      
       pool.connect().then(client=>{
         client.query(queryText)
         .then((res) => {
@@ -156,7 +157,7 @@ const createProductAndDefaultPriceTable = () =>{
         product_id UUID NOT NULL, 
         product_name TEXT NOT NULL,
         product_default_price INT NOT NULL,
-        PRIMARY KEY (id)
+        PRIMARY KEY (product_id)
       )`;
 
       pool.connect().then(client=>{
@@ -176,11 +177,13 @@ const createProductAndPriceTable = () =>{
   const queryText = 
   `CREATE TABLE IF NOT EXISTS 
       product_price_client (
+        id SERIAL,
         ClientID UUID NOT NULL,
-        ProductID INT NOT NULL,
+        ProductID UUID NOT NULL,
         ClientPrice INT NOT NULL,
+        PRIMARY KEY (id),
         FOREIGN KEY (ClientID) REFERENCES clients(id),
-        FOREIGN KEY (ProductID) REFERENCES default_product_price(id)
+        FOREIGN KEY (ProductID) REFERENCES default_product_price(product_id)
       )`;
         console.log('createProductAndPriceTable')
         pool.connect().then(client=>{

@@ -5,22 +5,25 @@
       <h1 id="modal-title" *ngIf="modalVersion === 'add'">Dodaj produkt</h1>
   </header>
   <section id="modal-body" class="body-edit" *ngIf="modalVersion === 'edit'">
-    <div class="product-name">
-      {{testStr.passParam.product_name}}
-    </div>
-    <div class="form-child">
-      <mat-form-field appearance="fill">
-        <mat-label>Waga</mat-label>
-        <input matInput placeholder="Amount" [(ngModel)]="itemAmount">
-      </mat-form-field>
-    </div>
-    <div class="product-amount">
-      {{testStr.productPriceMap[testStr.passParam.product_id].product_default_price}}
+    <div class="edit-container">
+      <div class="product-name">
+        {{testStr.passParam.product_name}}
+      </div>
+      <div class="form-child">
+        <mat-form-field appearance="fill">
+          <mat-label>Waga</mat-label>
+          <input matInput placeholder="Amount" [(ngModel)]="itemAmount">
+        </mat-form-field>
+      </div>
+      <div class="product-amount">
+        Cena za kg: {{testStr.productPriceMap[testStr.passParam.product_id].product_default_price}}
+      </div>
+
+      <div class="product-sum">
+        Suma: {{itemAmount * testStr.productPriceMap[testStr.passParam.product_id].product_default_price}}
+      </div>
     </div>
 
-    <div class="product-sum">
-      {{itemAmount * testStr.productPriceMap[testStr.passParam.product_id].product_default_price}}
-    </div>
 
     <div class="form-child">
       <mat-form-field appearance="fill">

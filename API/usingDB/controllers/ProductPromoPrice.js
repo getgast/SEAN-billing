@@ -1,5 +1,6 @@
 import { uuid } from 'uuidv4';
 import db from '../db';
+import ProductPromoPriceMapper from './../mappers/ProductPromoPrice.mapper'
 
 const ProductPromoPrice = {
     async addPromoPrice(req, res) {
@@ -32,7 +33,18 @@ const ProductPromoPrice = {
               console.log('gra')
             return res.status(201).send(checkInsertArr)
           }
-        }
+        },
+        async getClientsPromoProductList(req, res) {
+          const findAllQuery = 'SELECT * FROM  product_price_client';
+          try {
+            const { rows, rowCount } = await db.query(findAllQuery);
+            const map = await ProductPromoPriceMapper.mapProductClient(rows);
+
+            return res.status(200).send(map);
+          } catch(error) {
+            return res.status(400).send(error);
+          }
+        },
 }
 
 export default ProductPromoPrice;
