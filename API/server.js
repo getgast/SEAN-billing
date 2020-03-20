@@ -13,10 +13,11 @@ import ProductPromoPrice from './usingDB/controllers/ProductPromoPrice'
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
-
-const Reflection = ReflectionWithDB;
+const PORT = process.env.PORT || 8080;
+const path = require('path');
+const Reflection = process.env.TYPE === 'db' ? ReflectionWithDB : ReflectionWithJsObject;
 const app = express()
+app.use(express.static(___dirname +  'bm-sys-frontend/dist/bm-sys-frontend'))
 app.use(express.json())
 
 app.use(function (req, res, next) {
@@ -27,7 +28,12 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
+  res.sendFile(path.join(___dirname +  'bm-sys-frontend/dist/bm-sys-frontend/index.html'))
   return res.status(200).send({'message': 'YAY! Congratulations! Your first endpoint is working'});
+})
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(___dirname +  'bm-sys-frontend/dist/bm-sys-frontend/index.html'))
 })
 
 app.post('/api/v1/reflections', Auth.verifyToken, Reflection.create);
