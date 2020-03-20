@@ -10,7 +10,7 @@
     "be-build": "babel ./API/server.js --out-dir build",
     "dev-start": "babel-watch api/server.js",
     "postinstall": "ng build --aot -prod",
-    "heroku-postbuild": "npm run start-server"
+    "heroku-postbuild": "npm run start"
   },
   "repository": {
     "type": "git",
