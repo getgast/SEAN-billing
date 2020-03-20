@@ -9,7 +9,7 @@
     "start-server": "node ./build/api/server.js",
     "be-build": "babel ./API/server.js --out-dir build",
     "dev-start": "babel-watch api/server.js",
-    "postinstall": "ng build --aot -prod",
+    "postinstall": "npm run build --aot -prod",
     "heroku-postbuild": "npm run start"
   },
   "repository": {
