@@ -19,6 +19,7 @@ export class EditOrderComponent implements OnInit {
   public displayedColumns: string[] = [
     "product",
     "order_amount",
+    "order_use_by_date",
     "product_price",
     "order_price",
     "order_comment",
@@ -32,6 +33,7 @@ export class EditOrderComponent implements OnInit {
   public mapProductPrice = {};
   public testBlob;
   public isBlobExist = false;
+  public totalOrderAmount = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,7 +60,24 @@ export class EditOrderComponent implements OnInit {
     this.http.get(`api/v1/order/${id}`).subscribe(data => {
       this.orderData = data;
       //this.setFormArrayValue(this.orderData.orderChild);
+    }, er=>{
+      console.log(er)
+    },
+    ()=>{
+      this.totalOrderAmount = this.countTotalPrice(this.orderData['orderChild'])
     });
+  }
+
+  countTotalPrice(orderList) {
+    let returnAmount = 0;
+    console.log(orderList)
+    orderList.forEach(element => {
+      const centsToNumber = parseInt(element. order_sum);
+
+      returnAmount += centsToNumber
+    });
+
+    return returnAmount
   }
 
   getProductPriceList() {
@@ -124,7 +143,6 @@ export class EditOrderComponent implements OnInit {
   }
 
   createOrderItem(item = null) {
-    console.log(item);
     return this.fb.group({
       id: item?.id || null,
       productId: this.fb.control(item?.product_id || ""),
@@ -145,10 +163,6 @@ export class EditOrderComponent implements OnInit {
     })
   }
 
-  findClientData(){
-    return
-  }
-
   deleteOrderItem(element) {
     const elemBody = element;
     console.log(elemBody)
@@ -163,19 +177,19 @@ export class EditOrderComponent implements OnInit {
     this.openModal(item, 'edit');
   }
 
-  openAddProductModal(){
+  openAddProductModal() {
     this.openModal({}, 'add');
   }
 
   closeAndGeneratePdf(){
-    console.log('pdf')
    this.passListToBE();
   }
 
   // test pass param
   passListToBE(){
     const clientMap = this.createClientMap(this.clientList);
-    this.orderData.order.client = clientMap[this.orderData.order.client_id]
+    this.orderData.order.client = clientMap[this.orderData.order.client_id];
+    this.orderData.order.total = this.totalOrderAmount;
 
     this.http
     .postBlob(`api/v1/create-pdf-test`, this.orderData)
@@ -187,14 +201,6 @@ export class EditOrderComponent implements OnInit {
       this.testBlob = blob
 
     });
-  }
-
-  dataToPdf(){
-    return {
-      shipping: {
-
-      }
-    }
   }
 
   // modal methods

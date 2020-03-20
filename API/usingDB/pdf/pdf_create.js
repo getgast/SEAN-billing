@@ -98,7 +98,7 @@ const pdfHelper = {
       .fontSize(12)
       .font("OpenSans-SemiBold")
       .text(invoice.order.client.client_name, 50, 158, { align: "right" })
-      .text(invoice.order.client.client_address, 50, 173, { align: "right" })
+      .text(invoice.order.client.client_address, 410, 173, { width:150, align: "right" })
       .text(invoice.order.client.client_city, 50, 188, { align: "right" })
       .moveDown();
   },
@@ -135,7 +135,7 @@ function generateInvoiceTable(doc, invoice) {
     invoiceTableTop,
     "Nr.",
     "Product",
-    "Data",
+    "Use by Date",
     "Qnt kg.",
     "Price per kg.",
     "Total",
@@ -189,18 +189,9 @@ function generateInvoiceTable(doc, invoice) {
       }
       console.log(lastRow + '<--lastRow')
       generateHr(doc, tableTopChange + lastRow);
+      generateTableTotal(doc, tableTopChange + lastRow + 20, "Total", formatCurrency(invoice.order.total))
     }
   }
-
-  const subtotalPosition = invoiceTableTop + (i + 1) * 30;
-  const paidToDatePosition = subtotalPosition + 20;
-
-  const duePosition = tableTopChange + 50;
-  doc.font("Helvetica-Bold");
-
-  generateTableTotal(doc, duePosition, "Total", formatCurrency(234))
-
-  doc.font("Helvetica");
 }
 
 function generateFooter(doc) {
@@ -237,7 +228,7 @@ function generateTableHeader(
     .fontSize(10)
     .text(index, 35, y, { width: 57, align: "center" })
     .text(product_name, 60, y, { width: 110, align: "center" })
-    .text(use_date, 200, y, { width: 40, align: "center" })
+    .text(use_date, 190, y, { width: 60, align: "center" })
     .text(quantity, 260, y, { width: 60, align: "center" })
     .text(unitCost, 325, y, { width: 60, align: "center" })
     .text(lineTotal, 380, y, { width: 60, align: "center" })
@@ -259,9 +250,10 @@ function generateTableRow(
 ) {
   if (product_name.length > 0) {
     index += 1;
-    console.log("bu");
+    
     const checkTextWidth = Math.ceil(doc.widthOfString(comment) / 100);
     const yChange = checkTextWidth * 10;
+    console.log(yChange + '<--yChange')
     generateTd(doc, y, yChange);
   }
 

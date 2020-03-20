@@ -47,10 +47,6 @@ const routes: Routes = [{
   component: ClientsListComponent
 },
 {
-  path: 'add-product',
-  component: AddProductComponent
-},
-{
   path: 'product-list',
   component: ProductListComponent
 },

@@ -10,6 +10,13 @@ export class OrderedItemsComponent implements OnInit {
   public orderedItemsList = [];
   public clientList = [];
   public clientListMap = {};
+  public displayedColumns: string[] = [
+    "clientName",
+    "productName",
+    "orderAmount",
+    "orderTotal",
+    "orderDate",
+  ];
 
   constructor(private http: WebServiceService) { }
 

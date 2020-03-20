@@ -9,14 +9,33 @@ import { WebServiceService } from 'src/app/service/web-service.service';
 export class ProductListComponent implements OnInit {
   public productList = [];
   public promoProductMap = {};
-  public clientList = {};
+  public clientList = []
   public mapForTable = {};
+  public testMapForTable = {};
+  public productMap = {};
+  public testviewForTable = {};
+  public testPromoMap = {};
+
+  public displayedColumns: string[] = [
+    "productName",
+    "defaultProductPrice"
+  ];
+
+
   constructor(private http: WebServiceService) { }
 
   ngOnInit(): void {
     this.getProductList();
     this.getAllPropoProductMap();
     this.getAllClients();
+
+  }
+
+  addToTableList(){
+    this.clientList.forEach(element => {
+      console.log(element)
+      this.displayedColumns.push(element.id)
+    });
   }
 
   getProductList() {
@@ -26,13 +45,48 @@ export class ProductListComponent implements OnInit {
       console.log(err)
     }, ()=>{
       this.generateMap()
+
+      // testopt
+      this.testProductMap( this.productList);
     })
   }
 
   getAllPropoProductMap(){
     this.http.get('api/v1/all-product-promo').subscribe(data=>{
       this.promoProductMap = data;
+    }, err=>{
+      console.log(err)
+    },
+    ()=>{
+      this.generateMapFromPromoProductMapChild(this.promoProductMap)
     })
+  }
+
+  generateMapFromPromoProductMapChild(mapKeys){
+    const objKeys = Object.keys(mapKeys);
+    let buildObj = {};
+
+    buildObj = objKeys.reduce((map, item)=>{
+      map[item] = this.mapiItem(this.promoProductMap[item])
+
+      return map;
+    }, {})
+
+    console.log(buildObj)
+    this.testPromoMap = buildObj
+  }
+
+  mapiItem(list){
+    return list.reduce((map, item)=>{
+
+      if (!map[item.clientid]) {
+        map[item.clientid] = [item]
+      } else {
+        map[item.clientid].push(item)
+      }
+
+      return map;
+    },{})
   }
 
   getAllClients() {
@@ -45,6 +99,7 @@ export class ProductListComponent implements OnInit {
     },
     ()=>{
       this.generateMap()
+      this.addToTableList();
     })
   }
 
@@ -52,6 +107,7 @@ export class ProductListComponent implements OnInit {
     const productMap = this.generateProductMap(this.productList)
     const productWithClientMap = this.generateProductClientMap(productMap)
     console.log(productWithClientMap)
+    this.testviewForTable = productWithClientMap;
   }
 
   generateProductMap(arry) {
@@ -64,6 +120,17 @@ export class ProductListComponent implements OnInit {
 
       return map;
     },{})
+  }
+
+  testProductMap(list) {
+    this.testMapForTable = list.reduce((obj, element) => {
+      if (!obj[element.product_id]) {
+        obj[element.product_id] = element;
+      }
+      return obj;
+    }, {});
+
+    console.log(this.testMapForTable)
   }
 
   generateProductClientMap(map) {

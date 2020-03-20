@@ -16,6 +16,14 @@
   }
 }
 
+.total-amount-container {
+  display: flex;
+  height: 100px;
+  width: 90%;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .action-container {
   display: flex;
   justify-content: space-around;

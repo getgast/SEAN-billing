@@ -8,6 +8,11 @@ import { WebServiceService } from 'src/app/service/web-service.service';
 })
 export class OrderHistoryComponent implements OnInit {
   public orderHistory;
+  public displayedColumns: string[] = [
+    "orderTitle",
+    "orderNumber",
+    "orderStatus"
+  ];
   constructor(private http: WebServiceService) { }
 
   ngOnInit(): void {

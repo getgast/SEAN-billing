@@ -6,3 +6,24 @@
     width: 150px;
   }
 }
+
+.list-wrapper {
+  .list-child {
+    display: flex;
+
+    .row-title {
+      min-width: 100px;
+    }
+
+    .row-list-child-container {
+      display: flex;
+      .default-price {
+        min-width: 50px;
+      }
+      .space {
+        margin: 0 3px
+      }
+    }
+  }
+}
+

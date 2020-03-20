@@ -8,6 +8,11 @@ import { WebServiceService } from 'src/app/service/web-service.service';
 })
 export class ClientsListComponent implements OnInit {
   public clientList = [];
+  public displayedColumns: string[] = [
+    "clientName",
+    "clientAdres",
+    "clientPhone"
+  ];
   constructor(private http: WebServiceService) { }
 
   ngOnInit(): void {

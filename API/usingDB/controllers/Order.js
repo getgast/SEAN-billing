@@ -63,7 +63,6 @@ const Order = {
       if(checkInsertArr.includes(false)) {
         return res.status(400).send([]);
       } else {
-          console.log('gra')
         return res.status(201).send(checkInsertArr)
       }
   },

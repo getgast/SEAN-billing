@@ -24,8 +24,6 @@ export class AddProductComponent implements OnInit {
   }s
 
   onSubmit() {
-    console.log('add')
-
     this.http.post('api/v1/add-product', this.productPriceForm.value).subscribe(data=>{
       console.log(data)
     })

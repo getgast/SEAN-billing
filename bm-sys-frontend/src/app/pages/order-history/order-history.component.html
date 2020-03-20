@@ -1,7 +1,18 @@
 <div class="wrapper">
-    <div *ngFor="let item of orderHistory" class="child" [routerLink]="['/edit-order', item['id']]">
-      <div class="title">{{item.title}} </div>
-      <div class="status">{{item.order_number}} </div>
-      <div class="status">{{item.status}} </div>
-    </div>
+    <table mat-table [dataSource]="orderHistory" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="orderTitle">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sklep </th>
+        <td mat-cell *matCellDef="let element" [routerLink]="['/edit-order', element['id']]"> {{element.title}} </td>
+      </ng-container>
+      <ng-container matColumnDef="orderNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nr Zamówienia </th>
+        <td mat-cell *matCellDef="let element" [routerLink]="['/edit-order', element['id']]"> {{element.order_number}} </td>
+      </ng-container>
+      <ng-container matColumnDef="orderStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let element" [routerLink]="['/edit-order', element['id']]"> {{element.status}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 </div>
