@@ -47,10 +47,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _dotenv2.default.config(); // server.js
 
 
-var PORT = process.env.PORT || 3000;
-
+var PORT = process.env.PORT || 8080;
+var path = require('path');
 var Reflection = process.env.TYPE === 'db' ? _Reflection4.default : _Reflection2.default;
 var app = (0, _express2.default)();
+app.use(_express2.default.static(___dirname + 'bm-sys-frontend/dist/bm-sys-frontend'));
 app.use(_express2.default.json());
 
 app.use(function (req, res, next) {
@@ -61,7 +62,12 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', function (req, res) {
+  res.sendFile(path.join(___dirname + 'bm-sys-frontend/dist/bm-sys-frontend/index.html'));
   return res.status(200).send({ 'message': 'YAY! Congratulations! Your first endpoint is working' });
+});
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(___dirname + 'bm-sys-frontend/dist/bm-sys-frontend/index.html'));
 });
 
 app.post('/api/v1/reflections', _Auth2.default.verifyToken, Reflection.create);
