@@ -46,6 +46,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _dotenv2.default.config(); // server.js
 
+
+var PORT = process.env.PORT || 3000;
+
 var Reflection = process.env.TYPE === 'db' ? _Reflection4.default : _Reflection2.default;
 var app = (0, _express2.default)();
 app.use(_express2.default.json());
@@ -114,77 +117,14 @@ app.post('/api/v1/create-pdf-test', function (req, res) {
 var _require = require("./usingDB/pdf/pdf_create"),
     createInvoice = _require.createInvoice;
 
-var invoice = {
-  shipping: {
-    name: "Server Mock Kłient",
-    address: "Server Mock Main Street",
-    city: "Server Mock City",
-    state: "Server Mock",
-    country: "Server Mock Country",
-    postal_code: 94111
-  },
-  items: [{
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    client_name: 'B&MSausages',
-    product_name: 'Kiełbasa',
-    order_amount: 12,
-    order_sum: 11
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }, {
-    item: "Masarnia",
-    description: "Wołowina",
-    quantity: 2,
-    amount: 6000
-  }],
-  subtotal: 240,
-  paid: 0,
-  invoice_nr: 2
-};
-
 // end pdf test
 
-app.listen(3000);
-console.log('app running on port ', 3000);
+app.listen(PORT, function (err) {
+  if (err) {
+    throw err;
+  }
+
+  var serverPath = process.env.NODE_ENV === "prod" ? "http://sean-deploy-bm.herokuapp.com" : "http://localhost";
+
+  console.log('app running on port ', serverPath);
+});
