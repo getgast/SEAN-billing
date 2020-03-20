@@ -15,7 +15,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-const Reflection = process.env.TYPE === 'db' ? ReflectionWithDB : ReflectionWithJsObject;
+const Reflection = ReflectionWithDB;
 const app = express()
 app.use(express.json())
 
