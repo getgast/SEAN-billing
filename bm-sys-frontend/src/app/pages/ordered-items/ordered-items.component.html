@@ -9,12 +9,12 @@
         <td mat-cell *matCellDef="let element"> {{element.product_name}} </td>
       </ng-container>
       <ng-container matColumnDef="orderAmount">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Waga </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Waga (kg) </th>
         <td mat-cell *matCellDef="let element"> {{element.order_amount}} </td>
       </ng-container>
       <ng-container matColumnDef="orderTotal">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Suma </th>
-        <td mat-cell *matCellDef="let element"> {{element.order_sum}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.order_sum | currency:"GBP"}} </td>
       </ng-container>
       <ng-container matColumnDef="orderDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>

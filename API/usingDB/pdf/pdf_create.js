@@ -178,16 +178,14 @@ function generateInvoiceTable(doc, invoice) {
 
     generateHr(doc, tableTopChange);
 
-   
-
     if (i === invoice.orderChild.length - 1) {
-      console.log("end");
+      
       let lastRow = Math.ceil(checkTextWidth / 100) * 20;
 
       if(lastRow === 0) {
         lastRow = 30
       }
-      console.log(lastRow + '<--lastRow')
+     
       generateHr(doc, tableTopChange + lastRow);
       generateTableTotal(doc, tableTopChange + lastRow + 20, "Total", formatCurrency(invoice.order.total))
     }
