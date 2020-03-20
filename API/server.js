@@ -12,6 +12,9 @@ import ProductWithDefaultPrice from './usingDB/controllers/ProductWithDefaultPri
 import ProductPromoPrice from './usingDB/controllers/ProductPromoPrice'
 
 dotenv.config();
+
+const PORT = process.env.PORT || 3000;
+
 const Reflection = process.env.TYPE === 'db' ? ReflectionWithDB : ReflectionWithJsObject;
 const app = express()
 app.use(express.json())
@@ -78,91 +81,16 @@ app.post('/api/v1/create-pdf-test', (req, res)=>{
 });
 const { createInvoice } = require("./usingDB/pdf/pdf_create");
 
-const invoice = {
-  shipping: {
-    name: "Server Mock Kłient",
-    address: "Server Mock Main Street",
-    city: "Server Mock City",
-    state: "Server Mock",
-    country: "Server Mock Country",
-    postal_code: 94111
-  },
-  items: [
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      client_name: 'B&MSausages',
-      product_name: 'Kiełbasa',
-      order_amount: 12,
-      order_sum: 11,
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    {
-      item: "Masarnia",
-      description: "Wołowina",
-      quantity: 2,
-      amount: 6000
-    },
-    
-  ],
-  subtotal: 240,
-  paid: 0,
-  invoice_nr: 2
-};
 
 
 // end pdf test
 
-app.listen(3000)
-console.log('app running on port ', 3000);
+app.listen(PORT, err=>{
+  if(err) {
+    throw err;
+  }
+
+  const serverPath = process.env.NODE_ENV === "prod" ? "http://sean-deploy-bm.herokuapp.com":"http://localhost"
+
+  console.log('app running on port ', serverPath);
+})
