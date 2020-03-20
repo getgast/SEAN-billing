@@ -5,7 +5,7 @@
   "main": "build/api/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-server": "node ./build/API/server.js",
+    "start-server": "node ./build/api/server.js",
     "be-build": "babel ./API/server.js --out-dir build",
     "dev-start": "babel-watch api/server.js",
     "heroku-postbuild": "npm run start-server"
