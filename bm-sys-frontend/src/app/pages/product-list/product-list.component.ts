@@ -15,6 +15,7 @@ export class ProductListComponent implements OnInit {
   public productMap = {};
   public testviewForTable = {};
   public testPromoMap = {};
+  public showProductTable = false;
 
   public displayedColumns: string[] = [
     "productName",
@@ -54,6 +55,7 @@ export class ProductListComponent implements OnInit {
   getAllPropoProductMap(){
     this.http.get('api/v1/all-product-promo').subscribe(data=>{
       this.promoProductMap = data;
+      console.log( this.promoProductMap)
     }, err=>{
       console.log(err)
     },
@@ -65,7 +67,7 @@ export class ProductListComponent implements OnInit {
   generateMapFromPromoProductMapChild(mapKeys){
     const objKeys = Object.keys(mapKeys);
     let buildObj = {};
-
+    console.log(objKeys)
     buildObj = objKeys.reduce((map, item)=>{
       map[item] = this.mapiItem(this.promoProductMap[item])
 
@@ -100,6 +102,7 @@ export class ProductListComponent implements OnInit {
     ()=>{
       this.generateMap()
       this.addToTableList();
+      this.showProductTable = true;
     })
   }
 
@@ -126,6 +129,8 @@ export class ProductListComponent implements OnInit {
     this.testMapForTable = list.reduce((obj, element) => {
       if (!obj[element.product_id]) {
         obj[element.product_id] = element;
+      } else {
+        obj[element.product_id].push(element)
       }
       return obj;
     }, {});

@@ -3,7 +3,7 @@
   <app-add-product></app-add-product>
   <div class="test-table">
     <div class="list-wrapper">
-           <ng-container>
+           <ng-container *ngIf="showProductTable">
         <table mat-table [dataSource]="testviewForTable | keyvalue" matSort class="mat-elevation-z8">
           <ng-container matColumnDef="productName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Produkt </th>

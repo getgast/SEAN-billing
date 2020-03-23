@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 8080;
 const path = require('path');
 const Reflection = process.env.TYPE === 'db' ? ReflectionWithDB : ReflectionWithJsObject;
 const app = express()
-app.use(express.static(___dirname +  'bm-sys-frontend/dist/bm-sys-frontend'))
+
 app.use(express.json())
 
 app.use(function (req, res, next) {
@@ -27,14 +27,15 @@ app.use(function (req, res, next) {
     next();
 });
 
+
+
 app.get('/', (req, res) => {
-  res.sendFile(path.join(___dirname +  'bm-sys-frontend/dist/bm-sys-frontend/index.html'))
+ 
   return res.status(200).send({'message': 'YAY! Congratulations! Your first endpoint is working'});
 })
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(___dirname +  'bm-sys-frontend/dist/bm-sys-frontend/index.html'))
-})
+
+
 
 app.post('/api/v1/reflections', Auth.verifyToken, Reflection.create);
 app.get('/api/v1/reflections', Auth.verifyToken, Reflection.getAll);
@@ -91,12 +92,6 @@ const { createInvoice } = require("./usingDB/pdf/pdf_create");
 
 // end pdf test
 
-app.listen(PORT, err=>{
-  if(err) {
-    throw err;
-  }
-
-  const serverPath = process.env.NODE_ENV === "prod" ? "http://sean-deploy-bm.herokuapp.com":"http://localhost"
-
-  console.log('app running on port ', serverPath);
+app.listen(3000, err=>{
+   console.log('app running on port ');
 })

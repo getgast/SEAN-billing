@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+
 import db from '../db';
 import ProductPromoPriceMapper from './../mappers/ProductPromoPrice.mapper'
 
